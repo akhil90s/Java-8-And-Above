@@ -1,65 +1,57 @@
 package stream;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class StreamJAVA8 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-		// differentWaysOfStreamCreation();
+		List<Integer> listOfIntegers = getListOfInteger();
 
-		List<String> memberNames = new ArrayList<>();
-		memberNames.add("Amitabh");
-		memberNames.add("Shekhar");
-		memberNames.add("Aman");
-		memberNames.add("Rahul");
-		memberNames.add("Shahrukh");
-		memberNames.add("Salman");
-		memberNames.add("Yana");
-		memberNames.add("Lokesh");
+		// Find out sum of all integers greater than 10
+		int sumOfAllIntegersGreaterThan10 = listOfIntegers.stream().filter((Integer i) -> i > 10).mapToInt(i -> i)
+				.sum();
+		System.out.println(sumOfAllIntegersGreaterThan10);
+		
+		// Find duplicate elements in a list using stream functions
+		Set<Integer> set = new HashSet<>();
+		List<Integer> dublicateElements = listOfIntegers.stream().filter(n->!set.add(n)).collect(Collectors.toList());
+		System.out.println(dublicateElements);
+		
+		// Find the total number of all the elements 
+		long countOfElements = listOfIntegers.stream().count();
+		System.out.println(countOfElements);
+		
+		// Find first non-repeated character in the string
+		String input = "Java Hungry Blog Alive is Awesome";
+		Character resultNonRepeatedCharacter = input.chars().mapToObj(s -> Character.toLowerCase(Character.valueOf((char) s)))
+				.collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+				.entrySet().stream().filter(entry -> entry.getValue() == 1L).map(entry -> entry.getKey()).findFirst()
+				.get();
+		System.out.println(resultNonRepeatedCharacter);
 
-		memberNames.stream().sorted().map(String::toUpperCase).forEach(System.out::println);
-
-		boolean matchedResult = memberNames.stream().
-				
-				anyMatch((s) -> s.startsWith("A"));
-
+		// Find first repeated character in the string
+		Character resultFirstRepeatedCharacter = input.chars().mapToObj(s -> Character.toLowerCase(Character.valueOf((char) s)))
+				.collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+				.entrySet().stream().filter(entry -> entry.getValue() > 1L).map(entry -> entry.getKey()).findFirst()
+				.get();
+		System.out.println(resultFirstRepeatedCharacter);
+		
 	}
+	
+	static List<Integer> getListOfInteger() {
 
-	static void differentWaysOfStreamCreation() {
-
-		/// Stream Creation
-		List<Integer> list = new ArrayList<Integer>();
-
-		for (int i = 1; i < 10; i++) {
-			list.add(i);
-		}
-
-		Stream<Integer> stream = list.stream();
-		stream.forEach(p -> System.out.println(p));
-
-		System.out.println(stream.count());
-
+		List<Integer> listOfInteger = new ArrayList<>();
+		Collections.addAll(listOfInteger, 11, 3, 5, 20, 4, 3, 21, 45, 98, 21, 98);
+		return listOfInteger;
 	}
-
-	static void streamToTheCollection() {
-
-		List<Integer> list = new ArrayList<Integer>();
-		for (int i = 1; i < 10; i++) {
-			list.add(i);
-		}
-		Stream<Integer> stream = list.stream();
-		Integer[] evenNumbersArr = stream.filter(i -> i % 2 == 0).toArray(Integer[]::new);
-
-		System.out.println(evenNumbersArr);
-
-		/// List<Integer> evenNumbersList = stream.filter(i -> i % 2 ==
-		/// 0).collect(Collectors.toList());
-		// System.out.print(evenNumbersList);
-
-	}
+	
 
 }
