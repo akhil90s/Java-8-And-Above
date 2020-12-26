@@ -2,6 +2,7 @@ package stream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,6 +45,34 @@ public class StreamJAVA8 {
 				.get();
 		System.out.println(resultFirstRepeatedCharacter);
 		
+		// Find the names from a list of names having length more than 3
+		List<String> listOfNames = new ArrayList<>();
+		Collections.addAll(listOfNames, "Akhil", "Amitesh", "Akshay", "Anirudh", "Milind");
+		List<String> filteredListOfNames = listOfNames.stream().filter(s -> s.length() > 3)
+				.collect(Collectors.toList());
+		System.out.println(filteredListOfNames);
+		
+		
+		// Find the youngest individual from a group of people
+		List<Individual> listOfIndividuals = new ArrayList<>();
+		
+		Individual i1 = new Individual("Akhil", 25);
+		Individual i2 = new Individual("Amitesh", 23);
+		Individual i3 = new Individual("Akshay", 25);
+		Individual i4 = new Individual("Anirudh", 27);
+		Individual i5 = new Individual("Milind", 21);
+		
+		Collections.addAll(listOfIndividuals, i1, i2, i3, i4, i5);
+		
+	    Individual youngestPerson = listOfIndividuals.stream().min(Comparator.comparing(Individual::getAge)).get();
+		System.out.println(youngestPerson);
+		
+		// Find the oldest individual from a group of people
+		
+		Individual oldestPerson = listOfIndividuals.stream().max(Comparator.comparing(Individual::getAge)).get();
+		System.out.println(oldestPerson);
+			
+		
 	}
 	
 	static List<Integer> getListOfInteger() {
@@ -52,6 +81,40 @@ public class StreamJAVA8 {
 		Collections.addAll(listOfInteger, 11, 3, 5, 20, 4, 3, 21, 45, 98, 21, 98);
 		return listOfInteger;
 	}
-	
 
 }
+
+class Individual {
+
+	public Individual(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+
+	private String name;
+	private int age;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	@Override
+	public String toString() {
+		return "Individual [name=" + name + ", age=" + age + "]";
+	}
+
+}
+
