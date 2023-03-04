@@ -6,48 +6,47 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GroupingBy_PartitioningBy_Mapping_Counting_PersonStreamJAVA8 {
+public class Streams_Functions_GroupingBy_PartitioningBy_Mapping_Counting {
 
 	public static void main(String[] args) {
+		
 		List<Person> resultantList = populateWithData();
 
-		System.out.println("-----Obtain US and Non-US based persons by using groupingBy and partitioningBy-----");
-
-		Map<Boolean, List<Person>> a1 = resultantList.stream()
+		// Obtain US and Non-US based persons by using groupingBy and partitioningBy
+		Map<Boolean, List<Person>> partitioningByUSAndNonUS = resultantList.stream()
 				.collect(Collectors.partitioningBy((Person p) -> p.getCountry().equals("US")));
-		System.out.println(a1);
-		Map<Boolean, List<Person>> a2 = resultantList.stream()
+		System.out.println(partitioningByUSAndNonUS);
+		
+		Map<Boolean, List<Person>> groupingByUSAndNonUS = resultantList.stream()
 				.collect(Collectors.groupingBy((Person p) -> p.getCountry().equals("US")));
-		System.out.println(a2);
+		System.out.println(groupingByUSAndNonUS);
+		
+		// Group By Countries
+		Map<String, List<Person>> groupByCountries = resultantList.stream()
+				.collect(Collectors.groupingBy(Person::getCountry));
+		System.out.println(groupByCountries);
 
-		System.out.println("-----Count US and Non-US based persons by using groupingBy and partitioningBy-----");
-
-		Map<Boolean, Long> b1 = resultantList.stream()
+		// Count US and Non-US based persons by using groupingBy and partitioningBy 
+		Map<Boolean, Long> partitioningByCountOfUSAndNonUS = resultantList.stream()
 				.collect(Collectors.partitioningBy((Person p) -> p.getCountry().equals("US"), Collectors.counting()));
-		System.out.println(b1);
-		Map<Boolean, Long> b2 = resultantList.stream()
+		System.out.println(partitioningByCountOfUSAndNonUS);
+		
+		Map<Boolean, Long> groupingByCountOfUSAndNonUS = resultantList.stream()
 				.collect(Collectors.groupingBy((Person p) -> p.getCountry().equals("US"), Collectors.counting()));
-		System.out.println(b2);
+		System.out.println(groupingByCountOfUSAndNonUS);
 
-		System.out.println("-----Obtain persons in each of the country and count them using groupingBy-----");
-
-		Map<String, List<Person>> c1 = resultantList.stream().collect(Collectors.groupingBy(Person::getCountry));
-		System.out.println(c1);
+		// Count persons based on country
 		Map<String, Long> c2 = resultantList.stream()
 				.collect(Collectors.groupingBy(Person::getCountry, Collectors.counting()));
 		System.out.println(c2);
 
-		System.out.println(
-				"-----Obtain US and Non-US based persons by using partitioningBy and map names to uppercase using mapping-----");
-
+		// Obtain US and Non-US based persons by using partitioningBy and map names to uppercase using mapping
 		Map<Boolean, List<String>> d1 = resultantList.stream()
 				.collect(Collectors.partitioningBy((Person p) -> p.getCountry().equals("US"),
 						Collectors.mapping((Person p) -> p.getName().toUpperCase(), Collectors.toList())));
 		System.out.println(d1);
 
-		System.out.println(
-				"-----Obtain persons in each of the country by using groupingBy and map names to uppercase using mapping-----");
-		
+		// Obtain persons in each of the country by using groupingBy and map names to uppercase using mapping
 		Map<String, List<String>> e1 = resultantList.stream().collect(Collectors.groupingBy(Person::getCountry,
 				Collectors.mapping((Person p) -> p.getName().toUpperCase(), Collectors.toList())));
 		System.out.println(e1);

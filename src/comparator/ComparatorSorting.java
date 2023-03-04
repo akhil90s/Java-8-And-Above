@@ -19,14 +19,11 @@ public class ComparatorSorting {
 		Employee e8 = new Employee("Akhil", 27, 4);
 		List<Employee> list = new ArrayList<>();
 		Collections.addAll(list, e1, e2, e3, e4, e5, e6, e7, e8);
-		
-		
-		//Comparator<Employee> c1 = new Comparator.
+
 		Comparator<Employee> c1 = Comparator.comparing(Employee::getName).thenComparing(Employee::getAge)
 				.thenComparing(Employee::getExperience);
 		Collections.sort(list, c1);
 		list.forEach(System.out::println);
-
 
 	}
 
