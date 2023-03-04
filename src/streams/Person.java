@@ -1,4 +1,4 @@
-package stream;
+package streams;
 
 public class Person {
 

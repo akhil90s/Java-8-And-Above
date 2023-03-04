@@ -1,4 +1,4 @@
-package stream;
+package streams;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class StreamJAVA8 {
 		Collections.addAll(listOfIntegers, 11, 3, 5, 20, 4, 3, 21, 45, 98, 21, 98);
 
 		// Find out sum of all integers greater than 10
-		int sumOfAllIntegersGreaterThan10 = listOfIntegers.stream().filter((Integer i) -> i > 10).mapToInt(i -> i)
+		int sumOfAllIntegersGreaterThan10 = listOfIntegers.stream().filter(i -> i > 10).mapToInt(i -> i)
 				.sum();
 		System.out.println(sumOfAllIntegersGreaterThan10);
 
@@ -37,6 +38,13 @@ public class StreamJAVA8 {
 				.mapToObj(s -> Character.toLowerCase(Character.valueOf((char) s)))
 				.collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
 				.entrySet().stream().filter(entry -> entry.getValue() == 1L).map(entry -> entry.getKey()).findFirst()
+				.get();
+		
+		 Map<Character, Long> a = input.chars()
+				.mapToObj(s -> Character.toLowerCase(Character.valueOf((char) s)))
+				.collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
+		 System.out.println(a);
+				a.entrySet().stream().filter(entry -> entry.getValue() == 1L).map(entry -> entry.getKey()).findFirst()
 				.get();
 		System.out.println(resultNonRepeatedCharacter);
 
