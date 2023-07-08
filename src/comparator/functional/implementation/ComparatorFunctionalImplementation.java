@@ -27,7 +27,7 @@ public class ComparatorFunctionalImplementation {
 		Collections.sort(employeeList, c1);
 		employeeList.forEach(System.out::println);
 		
-		Employee youngestEmployee = employeeList. stream().min(Comparator.comparing(Employee::getAge)).get();
+		Employee youngestEmployee = employeeList.stream().min(Comparator.comparing(Employee::getAge)).get();
 		System.out.println(youngestEmployee);
 
 		Employee oldestEmployee = employeeList.stream().max(Comparator.comparing(Employee::getAge)).get();

@@ -43,8 +43,7 @@ public class Implementation {
 		System.out.println(multiplyNumbers.mathsOperations(5, 7));
 		System.out.println(characterCount.getCharacterCount("Akhil"));
 		System.out.println(characterCount.getCharacterCount("Kajal"));
-		
-		
+
 	}
 
 }
